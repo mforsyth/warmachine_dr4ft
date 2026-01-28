@@ -6,11 +6,17 @@ This file provides guidance to AI Agents when working with code in this reposito
 
 dr4ft is a NodeJS web application that simulates MTG draft and sealed formats between players and/or bots. It's built with Express on the backend, React on the frontend, uses WebSocket communication via engine.io, and integrates MTGJson data for card sets.
 
+We want to change dr4ft so that it supports Warmachine Leader Draft rather than Magic: The Gathering.
+This will involve handling the cards' data attributes differently,
+and displaying them during the draft in a manner
+more appropriate for Warmachine Leader Draft.
+
+
 ## Common Commands
 
 ### Development Commands
 - `npm start` - Start the production server (port 1337)
-- `npm run start-dev` - Start development server with hot reload (watch + nodemon)  
+- `npm run start-dev` - Start development server with hot reload (watch + nodemon)
 - `npm run start-debug` - Start development server with debugger on port 1338
 - `npm run build` - Build production bundle with webpack
 - `npm run watch` - Build and watch for changes in development mode
@@ -49,7 +55,7 @@ npx mocha "frontend/src/**/*.spec.js" --require @babel/register --exit
 ### Frontend Structure (`/frontend/src`)
 - **init.js** - Application entry point
 - **app.js** - Main App state management and WebSocket client
-- **gamestate.js** - Game state management and synchronization  
+- **gamestate.js** - Game state management and synchronization
 - **lobby/** - Game lobby and creation components
 - **game/** - In-game draft/sealed interface components
 - **components/** - Reusable UI components
@@ -63,7 +69,7 @@ npx mocha "frontend/src/**/*.spec.js" --require @babel/register --exit
 
 ### Data Flow
 1. MTGJson data downloaded to `/data` directory
-2. Cards/sets loaded into memory on server startup  
+2. Cards/sets loaded into memory on server startup
 3. Games create Pools which generate booster packs using rules from magic-sealed-data
 4. Player actions broadcast through WebSocket to update all clients
 
@@ -80,3 +86,11 @@ npx mocha "frontend/src/**/*.spec.js" --require @babel/register --exit
 - Debugger attaches to port 1338 when using `start-debug`
 - Game instances are managed in-memory (no database persistence)
 - Tests use mocha with Babel register for ES6+ support
+
+### Our custom sets
+
+The custom sets we care about for this development initiative are at `/data/custom/`.
+Our work will consist of adjusting the behavior of dr4ft to accomommdate these sets.
+We know that this will make dr4ft cease working for other sets that aren't in the custom directory;
+this is OK.
+

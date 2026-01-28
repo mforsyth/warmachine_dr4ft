@@ -15,6 +15,6 @@
     ],
     "theme_color": "#fafafa",
     "background_color": "#fafafa",
-    "start_url": "https://dr4ft.info/",
+    "start_url": "http://localhost:1337/",
     "display": "standalone"
 }

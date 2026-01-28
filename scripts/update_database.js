@@ -1,18 +1,19 @@
 const fs = require("fs");
 const path = require("path");
 const logger = require("../backend/logger");
-const { saveSetsAndCards, getDataDir } = require("../backend/data");
+const { saveSetsAndCards, getDataDir, saveBoosterRules } = require("../backend/data");
 const doSet = require("../backend/import/doSet");
 
 const updateDatabase = () => {
   let allCards = {};
   const allSets = {};
+  let boosterRules = {};
 
   // Add normal sets
   const setsToIgnore = ["ITP", "CP1", "CP2", "CP3"];
 
   const setsDataDir = path.join(getDataDir(), "sets");
-  if (fs.existsSync(setsDataDir)) {
+  if (fs.existsSync(setsDataDir) && false) {
     const files = fs.readdirSync(setsDataDir);
     files.forEach(file => {
       if (!/.json/g.test(file)) {
@@ -55,6 +56,28 @@ const updateDatabase = () => {
             const [set, cards] = doSet(json);
             allSets[json.code] = set;
             allCards = { ...allCards, ...cards };
+
+            // Extract booster rules from custom sets if present
+            // Only extract if the set uses non-standard rarities (not common/uncommon/rare/mythic)
+            if (json.booster && json.booster.default) {
+              const boosterConfig = json.booster.default;
+              const sheetNames = Object.keys(boosterConfig.sheets || {});
+              const standardRarities = ['common', 'uncommon', 'rare', 'mythic', 'basic'];
+              const hasNonStandardRarities = sheetNames.some(name => !standardRarities.includes(name.toLowerCase()));
+
+              if (hasNonStandardRarities) {
+                boosterRules[json.code] = {
+                  totalWeight: boosterConfig.boostersTotalWeight || 1,
+                  boosters: boosterConfig.boosters.map(b => ({
+                    sheets: b.contents,
+                    weight: b.weight
+                  })),
+                  sheets: boosterConfig.sheets
+                };
+                logger.info(`Extracted booster rules for ${json.code} (non-standard rarities)`);
+              }
+            }
+
             logger.info(`Parsing ${json.code} finished`);
           }
         } catch (err) {
@@ -67,6 +90,12 @@ const updateDatabase = () => {
   logger.info("Parsing AllSets.json finished");
   saveSetsAndCards(allSets, allCards);
   logger.info("Writing sets.json and cards.json finished");
+
+  // Save booster rules if any were extracted
+  if (Object.keys(boosterRules).length > 0) {
+    saveBoosterRules(boosterRules);
+    logger.info("Writing boosterRules.json finished");
+  }
 };
 
 module.exports = updateDatabase;

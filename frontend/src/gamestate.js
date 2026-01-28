@@ -280,11 +280,14 @@ function Key(groups, sort) {
       ["Colorless", "White", "Blue", "Black", "Red", "Green", "Multicolor"]
         .filter(x => keys.indexOf(x) > -1);
     break;
-  case "rarity":
-    keys =
-      ["Mythic", "Rare", "Uncommon", "Common", "Basic", "Special"]
-        .filter(x => keys.indexOf(x) > -1);
+  case "rarity": {
+    const standardRarities = ["Mythic", "Rare", "Uncommon", "Common", "Basic", "Special"];
+    const matchedStandardRarities = standardRarities.filter(x => keys.indexOf(x) > -1);
+    // Include any non-standard rarities (like "Spell", "Weapon" for custom sets)
+    const nonStandardRarities = keys.filter(x => !standardRarities.includes(x));
+    keys = [...matchedStandardRarities, ...nonStandardRarities];
     break;
+  }
   case "type":
     keys = keys.sort();
     break;

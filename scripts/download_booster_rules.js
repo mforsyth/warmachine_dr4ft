@@ -19,7 +19,7 @@ async function fetch() {
   const repo = await axios.get(REPO_URL);
   const sha = repo.data.object.sha;
   const currentBoosterRulesVersion = getBoosterRulesVersion();
-  if (currentBoosterRulesVersion === sha) {
+  if (currentBoosterRulesVersion === sha || true) {
     logger.info(`Found same boosterRules version (${currentBoosterRulesVersion}). Skip new download`);
     return;
   }

@@ -61,7 +61,7 @@ const fetchZip = () => (
 const download = async () => {
   logger.info("Checking if AllSets.json is up to date");
   const [isUpToDate, version] = await isVersionUpToDate();
-  if (!isUpToDate) {
+  if (!isUpToDate || true) {
     await fetchZip();
     logger.info("Fetch AllSets.json finished. Updating the cards and sets data");
     updateDatabase();

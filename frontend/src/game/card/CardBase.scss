@@ -1,7 +1,7 @@
 .CardBase {
   display: grid;
   position: relative;
-  
+
   .CardBaseText, .CardBaseImage {
     grid-row: 1;
     grid-column: 1;
@@ -50,7 +50,7 @@
     opacity: 0.4;
   }
 }
-@keyframes rainbow { 
+@keyframes rainbow {
   0% { background-position: 0% 50% }
   50% { background-position: 100% 25% }
   100% { background-position:0% 50% }
@@ -151,6 +151,15 @@
       background: #eee;
       border: 1px solid #ddd;
       border-radius: 6px;
+    }
+
+    .origin-leader {
+      font-size: 0.8rem;
+      font-style: italic;
+      color: #555;
+      padding: 2px 4px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 4px;
     }
   }
 }

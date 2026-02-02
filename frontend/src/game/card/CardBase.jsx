@@ -127,7 +127,7 @@ const CardBaseImage = ({ src, handleError, name }) => (
 
       onError={handleError}
       onLoad={ev => ev.target.classList.remove("loading")}
-  
+
       src={src}
     />
   </div>
@@ -139,7 +139,7 @@ CardBaseImage.propTypes = {
   handleError: PropTypes.func
 };
 
-const CardBaseText = ({ name, manaCost, type, rarity, power, toughness, text, loyalty, colors }) => {
+const CardBaseText = ({ name, manaCost, type, rarity, power, toughness, text, loyalty, colors, originLeader }) => {
   return (
     <div className="CardBaseText" style={{ background: backgroundStyle(colors) }}>
       <div className="header">
@@ -156,7 +156,7 @@ const CardBaseText = ({ name, manaCost, type, rarity, power, toughness, text, lo
         {
           text && (
             <div className="text">
-              { 
+              {
                 text
                   .split('\n')
                   .map((line, i) => {
@@ -186,6 +186,10 @@ const CardBaseText = ({ name, manaCost, type, rarity, power, toughness, text, lo
           loyalty &&
             <div className="loyalty">{loyalty}</div>
         }
+        {
+          originLeader &&
+            <div className="origin-leader">Original leader: {originLeader}</div>
+        }
       </div>
     </div>
   );
@@ -209,5 +213,6 @@ CardBaseText.propTypes = {
   toughness: PropTypes.string,
   text: PropTypes.string,
   loyalty: PropTypes.string,
+  originLeader: PropTypes.string,
   children: PropTypes.node
 };

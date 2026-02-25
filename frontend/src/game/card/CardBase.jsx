@@ -148,8 +148,8 @@ const CardBaseText = ({ name, manaCost, type, rarity, power, toughness, text, lo
       </div>
 
       <div className="sub-header">
-        <div className="type">{type}</div>
         <div className="rarity">{rarity}</div>
+        <div className="type">{type}</div>
       </div>
 
       <div className="body">

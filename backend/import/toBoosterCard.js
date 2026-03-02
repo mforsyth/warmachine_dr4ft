@@ -24,7 +24,8 @@ const toBoosterCard = (setCode) => (mtgjsonCard, index, rawCards) => {
     loyalty,
     text,
     uuid = `dr4ft-${uuidV1()}`,
-    originLeader
+    originLeader,
+    spellStats
   } = mtgjsonCard;
   if (supertypes.includes("Basic")) {
     rarity = "basic";
@@ -63,7 +64,8 @@ const toBoosterCard = (setCode) => (mtgjsonCard, index, rawCards) => {
     loyalty,
     text,
     frameEffects,
-    originLeader
+    originLeader,
+    spellStats
   };
 };
 

@@ -139,7 +139,26 @@ CardBaseImage.propTypes = {
   handleError: PropTypes.func
 };
 
-const CardBaseText = ({ name, manaCost, type, rarity, power, toughness, text, loyalty, colors, originLeader }) => {
+const SpellStatsBar = ({ spellStats }) => {
+  if (!spellStats) return null;
+  const statOrder = ["COST", "RNG", "AOE", "DUR", "OFF"];
+  const entries = statOrder
+    .filter(k => spellStats[k] != null)
+    .map(k => ({ label: k, value: spellStats[k] }));
+  if (!entries.length) return null;
+  return (
+    <div className="spell-stats">
+      {entries.map(({ label, value }) => (
+        <div className="spell-stat" key={label}>
+          <span className="spell-stat-label">{label}</span>
+          <span className="spell-stat-value">{value}</span>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const CardBaseText = ({ name, manaCost, type, rarity, power, toughness, text, loyalty, colors, originLeader, spellStats }) => {
   return (
     <div className="CardBaseText" style={{ background: backgroundStyle(colors) }}>
       <div className="header">
@@ -151,6 +170,8 @@ const CardBaseText = ({ name, manaCost, type, rarity, power, toughness, text, lo
         <div className="rarity">{rarity}</div>
         <div className="type">{type}</div>
       </div>
+
+      <SpellStatsBar spellStats={spellStats} />
 
       <div className="body">
         {
@@ -214,5 +235,6 @@ CardBaseText.propTypes = {
   text: PropTypes.string,
   loyalty: PropTypes.string,
   originLeader: PropTypes.string,
+  spellStats: PropTypes.object,
   children: PropTypes.node
 };

@@ -40,52 +40,56 @@ const updateDatabase = () => {
       }
     });
   }
-  // Add custom sets
-  const customDataDir = path.join(getDataDir(), "custom");
-  if (fs.existsSync(customDataDir)) {
-    const files = fs.readdirSync(customDataDir);
-    files.forEach(file => {
-      // Integrate only json file
-      if (/.json/g.test(file)) {
-        const filePath = path.join(customDataDir, `${file}`);
-        try {
-          const json = JSON.parse(fs.readFileSync(filePath, "UTF-8"));
-          if (json.code) {
-            json.type = "custom";
-            logger.info(`Found custom set to integrate ${json.code} with path ${filePath}`);
-            const [set, cards] = doSet(json);
-            allSets[json.code] = set;
-            allCards = { ...allCards, ...cards };
+  // Load custom sets from both data/custom (gitignored) and sets/ (tracked by git)
+  const customSetDirs = [
+    path.join(getDataDir(), "custom"),
+    path.join(process.cwd(), "sets"),
+  ];
+  customSetDirs.forEach(customDataDir => {
+    if (fs.existsSync(customDataDir)) {
+      const files = fs.readdirSync(customDataDir);
+      files.forEach(file => {
+        // Integrate only json file
+        if (/.json/g.test(file)) {
+          const filePath = path.join(customDataDir, `${file}`);
+          try {
+            const json = JSON.parse(fs.readFileSync(filePath, "UTF-8"));
+            if (json.code) {
+              json.type = "custom";
+              logger.info(`Found custom set to integrate ${json.code} with path ${filePath}`);
+              const [set, cards] = doSet(json);
+              allSets[json.code] = set;
+              allCards = { ...allCards, ...cards };
 
-            // Extract booster rules from custom sets if present
-            // Only extract if the set uses non-standard rarities (not common/uncommon/rare/mythic)
-            if (json.booster && json.booster.default) {
-              const boosterConfig = json.booster.default;
-              const sheetNames = Object.keys(boosterConfig.sheets || {});
-              const standardRarities = ['common', 'uncommon', 'rare', 'mythic', 'basic'];
-              const hasNonStandardRarities = sheetNames.some(name => !standardRarities.includes(name.toLowerCase()));
+              // Extract booster rules from custom sets if present
+              if (json.booster && json.booster.default) {
+                const boosterConfig = json.booster.default;
+                const sheetNames = Object.keys(boosterConfig.sheets || {});
+                const standardRarities = ['common', 'uncommon', 'rare', 'mythic', 'basic'];
+                const hasNonStandardRarities = sheetNames.some(name => !standardRarities.includes(name.toLowerCase()));
 
-              if (hasNonStandardRarities) {
-                boosterRules[json.code] = {
-                  totalWeight: boosterConfig.boostersTotalWeight || 1,
-                  boosters: boosterConfig.boosters.map(b => ({
-                    sheets: b.contents,
-                    weight: b.weight
-                  })),
-                  sheets: boosterConfig.sheets
-                };
-                logger.info(`Extracted booster rules for ${json.code} (non-standard rarities)`);
+                if (hasNonStandardRarities) {
+                  boosterRules[json.code] = {
+                    totalWeight: boosterConfig.boostersTotalWeight || 1,
+                    boosters: boosterConfig.boosters.map(b => ({
+                      sheets: b.contents,
+                      weight: b.weight
+                    })),
+                    sheets: boosterConfig.sheets
+                  };
+                  logger.info(`Extracted booster rules for ${json.code} (non-standard rarities)`);
+                }
               }
-            }
 
-            logger.info(`Parsing ${json.code} finished`);
+              logger.info(`Parsing ${json.code} finished`);
+            }
+          } catch (err) {
+            logger.error(`Error while integrating the file ${filePath}: ${err.stack}`);
           }
-        } catch (err) {
-          logger.error(`Error while integrating the file ${filePath}: ${err.stack}`);
         }
-      }
-    });
-  }
+      });
+    }
+  });
 
   logger.info("Parsing AllSets.json finished");
   saveSetsAndCards(allSets, allCards);

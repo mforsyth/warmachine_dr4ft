@@ -182,9 +182,15 @@ let App = {
   },
   set(state) {
     Object.assign(App.state, state);
-    if (App.state.latestSet) {
-      // Default sets to the latest set.
-      const defaultSetCode = App.state.latestSet.code;
+    // Default sets to the latest set, or fall back to the first available set.
+    let defaultSetCode = App.state.latestSet && App.state.latestSet.code;
+    if (!defaultSetCode && App.state.availableSets) {
+      const firstGroup = Object.values(App.state.availableSets)[0];
+      if (firstGroup && firstGroup.length) {
+        defaultSetCode = firstGroup[0].code;
+      }
+    }
+    if (defaultSetCode) {
       const replicateDefaultSet = (desiredLength) => times(desiredLength, constant(defaultSetCode));
       const initializeIfEmpty = (sets, desiredLength) => {
         if (sets.length === 0) {

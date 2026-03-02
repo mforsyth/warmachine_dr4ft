@@ -59,7 +59,7 @@ const SelectSet = ({ value, onChange }) => {
       renderValue={(valueProps) => {
         return (
           <div className="SelectSet__input-container" >
-            <i className={`ss ss-${value.toLowerCase()}`} />
+            <i className={`ss ss-${(value || "").toLowerCase()}`} />
             <input className='SelectSet__input' {...valueProps} />
           </div>
         )

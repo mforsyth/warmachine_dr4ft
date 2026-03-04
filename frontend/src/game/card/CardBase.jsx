@@ -178,7 +178,7 @@ const CardBaseText = ({ name, manaCost, type, rarity, power, toughness, text, lo
           text && (
             <div className="text">
               {
-                text
+                renderLeaderNamePlaceholder(text, App.state.name)
                   .split('\n')
                   .map((line, i) => {
                     const bracketSection = line.match(/\([^\)]+\)/g)
@@ -214,6 +214,11 @@ const CardBaseText = ({ name, manaCost, type, rarity, power, toughness, text, lo
       </div>
     </div>
   );
+}
+
+function renderLeaderNamePlaceholder (cardText, drafterName) {
+  const name = (drafterName || "").trim() || "Drafter";
+  return cardText.split("_LEADER_NAME_").join(name);
 }
 function backgroundStyle (colors) {
   if (!colors || !colors.length) return 'var(--colorless)'

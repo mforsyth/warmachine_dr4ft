@@ -2,6 +2,26 @@ const crypto = require("crypto");
 const path = require("path");
 const {shuffle, truncate} = require("lodash");
 const uuid = require("uuid");
+
+const STARTER_CARD = {
+  name: "Buckle Up, Buttercup",
+  text: "Friendly Faction models in _LEADER_NAME_'s Control Area get +1DEF and +1ARM.  Buckle Up, Buttercup lasts for one round.",
+  rarity: "feat",
+  type: "Feat",
+  setCode: "WLD",
+  color: "",
+  colors: [],
+  manaCost: "",
+  cmc: 0,
+  power: "",
+  toughness: "",
+  frameEffects: "",
+  subtypes: [],
+  supertypes: [],
+  types: [],
+  originLeader: "Generic Leader",
+  uuid: "starter-buckle-up-buttercup"
+};
 const jsonfile = require("jsonfile");
 const Bot = require("./player/bot");
 const Human = require("./player/human");
@@ -529,6 +549,8 @@ module.exports = class Game extends Room {
     this.round = -1;
     this.players.forEach((p) => {
       p.pool = this.pool.shift();
+      const starterCard = { ...STARTER_CARD, cardId: uuid.v1() };
+      p.pool.push(starterCard);
       p.send("pool", p.pool);
       p.send("set", { round: -1 });
     });
@@ -543,6 +565,12 @@ module.exports = class Game extends Room {
       p.self = self;
       p.on("pass", this.pass.bind(this, p));
       p.send("set", { self });
+
+      if (!p.isBot) {
+        const starterCard = { ...STARTER_CARD, cardId: uuid.v1() };
+        p.pool.push(starterCard);
+        p.send("add", starterCard);
+      }
     });
 
     this.startRound();

@@ -3,11 +3,7 @@ const path = require("path");
 const {shuffle, truncate} = require("lodash");
 const uuid = require("uuid");
 
-const STARTER_CARD = {
-  name: "Buckle Up, Buttercup",
-  text: "Friendly Faction models in _LEADER_NAME_'s Control Area get +1DEF and +1ARM.  Buckle Up, Buttercup lasts for one round.",
-  rarity: "feat",
-  type: "Feat",
+const STARTER_CARD_DEFAULTS = {
   setCode: "WLD",
   color: "",
   colors: [],
@@ -19,9 +15,28 @@ const STARTER_CARD = {
   subtypes: [],
   supertypes: [],
   types: [],
-  originLeader: "Generic Leader",
-  uuid: "starter-buckle-up-buttercup"
 };
+
+const STARTER_CARDS = [
+  {
+    ...STARTER_CARD_DEFAULTS,
+    name: "Buckle Up, Buttercup",
+    text: "Friendly Faction models in _LEADER_NAME_'s Control Area get +1DEF and +1ARM.  Buckle Up, Buttercup lasts for one round.",
+    rarity: "feat",
+    type: "Feat",
+    originLeader: "Starter",
+    uuid: "starter-buckle-up-buttercup"
+  },
+  {
+    ...STARTER_CARD_DEFAULTS,
+    name: "Low Profile",
+    text: "SPD: 6, AAT: 5, MAT: 5, RAT: 5, DEF: 14, ARM: 14, ARC: 5, CTRL: 10, Health: 15",
+    rarity: "profile",
+    type: "Profile",
+    originLeader: "Starter",
+    uuid: "starter-low-profile"
+  }
+];
 const jsonfile = require("jsonfile");
 const Bot = require("./player/bot");
 const Human = require("./player/human");
@@ -549,8 +564,9 @@ module.exports = class Game extends Room {
     this.round = -1;
     this.players.forEach((p) => {
       p.pool = this.pool.shift();
-      const starterCard = { ...STARTER_CARD, cardId: uuid.v1() };
-      p.pool.push(starterCard);
+      STARTER_CARDS.forEach(card => {
+        p.pool.push({ ...card, cardId: uuid.v1() });
+      });
       p.send("pool", p.pool);
       p.send("set", { round: -1 });
     });
@@ -567,9 +583,11 @@ module.exports = class Game extends Room {
       p.send("set", { self });
 
       if (!p.isBot) {
-        const starterCard = { ...STARTER_CARD, cardId: uuid.v1() };
-        p.pool.push(starterCard);
-        p.send("add", starterCard);
+        STARTER_CARDS.forEach(card => {
+          const starterCard = { ...card, cardId: uuid.v1() };
+          p.pool.push(starterCard);
+          p.send("add", starterCard);
+        });
       }
     });
 

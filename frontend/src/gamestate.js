@@ -95,6 +95,17 @@ class GameState extends EventEmitter {
     if (card.cardId) {
       this.#state[card.cardId] = zoneName;
     }
+    // Enforce single Profile / Feat in main deck
+    if (zoneName === ZONE_MAIN && (card.rarity === "Profile" || card.rarity === "Feat")) {
+      const displaced = remove(zone, c => c !== card && c.rarity === card.rarity);
+      const side = this.get(ZONE_SIDEBOARD);
+      for (const c of displaced) {
+        side.push(c);
+        if (c.cardId) {
+          this.#state[c.cardId] = ZONE_SIDEBOARD;
+        }
+      }
+    }
   }
 
   move(fromZone, toZone, card) {

@@ -3,11 +3,8 @@ import PropTypes from "prop-types";
 import _ from "utils/utils";
 
 import App from "../app";
-import RadioOptions from "../components/RadioOptions";
 import Switch from "../components/Switch";
-import Modal from "../components/Modal"; 
-import { toTitleCase } from "../utils";
-import GameTypes from "./GameTypes";
+import Modal from "../components/Modal";
 import GameOptions from "./GameOptions";
 
 import "./CreateGameButton.scss"
@@ -57,7 +54,6 @@ const CreateRoomModal = () => {
   };
 
   const {title, seats} = App.state;
-  const gameTypes = ["draft", "sealed"];
 
   return (
     <Modal
@@ -75,26 +71,6 @@ const CreateRoomModal = () => {
           value={title}
           onChange={(e) => {App.save("title", e.currentTarget.value);}}
         />
-        <div>
-          <span className='connected-container'>
-            <RadioOptions
-              name="type"
-              description="Game type"
-              appProperty="gametype"
-              options={gameTypes.map(type => {
-                return {
-                  label: toTitleCase(type),
-                  value: type
-                };
-              })}
-              onChange={() => {
-                // always change back to the default when updating main
-                // game type
-                App.save("gamesubtype", "regular");
-              }}
-            />
-          </span>
-        </div>
       </ModalSection>
 
       <ModalSection label="Players" inputId="game-players-input" className="Players" >
@@ -114,10 +90,6 @@ const CreateRoomModal = () => {
             tooltip: "Anyone can join"
           }}
         />
-      </ModalSection>
-
-      <ModalSection label="Type" inputId="game-type-input" >
-        <GameTypes/>
       </ModalSection>
 
       <ModalSection label="Packs" inputId="game-packs-input" >

@@ -65,9 +65,6 @@ const Regular = ({sets, type}) => (
         onChange={App._emit("changeSetsNumber", type)}
         opts={_.seq(12, 1)} />
     </div>
-    <div>
-      <Sets sets={sets} type={type} />
-    </div>
   </Fragment>
 );
 

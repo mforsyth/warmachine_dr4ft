@@ -70,7 +70,12 @@ const CardsZone = () => {
     ? <Cols key={"pool"} {...props}/>
     : <Grid key={"pool"} {...props} />;
 
-  return !App.state.hidepicks || App.state.isGameFinished
-    ? [pack, pool]
-    : [pack];
+  const showPool = !App.state.hidepicks || App.state.isGameFinished;
+
+  return (
+    <div>
+      {pack}
+      {showPool && pool}
+    </div>
+  );
 };

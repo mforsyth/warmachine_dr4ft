@@ -4,10 +4,11 @@ import PropTypes from "prop-types";
 import _ from "utils/utils";
 import App from "../app";
 import Spaced from "../components/Spaced";
-import {ZONE_PACK, getZoneDisplayName} from "../zones";
+import {ZONE_MAIN, ZONE_PACK, getZoneDisplayName} from "../zones";
 import CardDefault from "./card/CardDefault.jsx"
 import CardGlimpse from "./card/CardGlimpse.jsx"
 import CardPlaceholder from "./card/CardPlaceholder.jsx"
+import LeaderProfile from "./LeaderProfile"
 import "./Grid.scss"
 
 const Grid = ({zones}) => (
@@ -89,22 +90,25 @@ const Zone = ({ name: zoneName }) => {
         }
       </div>
 
-      <div className="cards">
-        {
-          cards.map((card, i) => isPackZone && game.burnsPerPack > 0
-            ? <CardGlimpse key={i+zoneName+card.name+card.foil} card={card} zoneName={zoneName} />
-            : <CardDefault key={i+zoneName+card.name+card.foil} card={card} zoneName={zoneName} />
-          )
-        }
+      <div className="zone-with-profile">
+        <div className="cards">
+          {
+            cards.map((card, i) => isPackZone && game.burnsPerPack > 0
+              ? <CardGlimpse key={i+zoneName+card.name+card.foil} card={card} zoneName={zoneName} />
+              : <CardDefault key={i+zoneName+card.name+card.foil} card={card} zoneName={zoneName} />
+            )
+          }
 
-        {
-          cards.length === 0 && isPackZone && // TODO game is not over!
-          ([
-            <h2 className='waiting' key='other'>Waiting for the next pack...</h2>,
-            Array(cardsInNextPack).fill(0)
-              .map((_, i) => <CardPlaceholder key={i} />)
-          ])
-        }
+          {
+            cards.length === 0 && isPackZone && // TODO game is not over!
+            ([
+              <h2 className='waiting' key='other'>Waiting for the next pack...</h2>,
+              Array(cardsInNextPack).fill(0)
+                .map((_, i) => <CardPlaceholder key={i} />)
+            ])
+          }
+        </div>
+        {zoneName === ZONE_MAIN && <LeaderProfile cards={cards} />}
       </div>
     </div>
   );

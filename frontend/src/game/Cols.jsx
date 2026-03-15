@@ -2,9 +2,10 @@ import React, {Component} from "react";
 import PropTypes from "prop-types";
 
 import App from "../app";
-import {getZoneDisplayName} from "../zones";
+import {ZONE_MAIN, getZoneDisplayName} from "../zones";
 import Spaced from "../components/Spaced";
 import CardBase from "./card/CardBase.jsx";
+import LeaderProfile from "./LeaderProfile";
 import "./Cols.scss";
 
 class Cols extends Component {
@@ -92,12 +93,17 @@ const Zones = ({onMouseOver, zoneNames, onMouseLeave}) => {
       );
     }
 
+    const allCards = Object.values(zone).flat();
+
     return (
       <div key={zoneName} className='zone'>
         <h1>
           <Spaced elements={[getZoneDisplayName(zoneName), sum]}/>
         </h1>
-        {cols}
+        <div className="zone-with-profile">
+          <div className="zone-cols">{cols}</div>
+          {zoneName === ZONE_MAIN && <LeaderProfile cards={allCards} />}
+        </div>
       </div>
     );
   };

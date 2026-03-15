@@ -22,7 +22,7 @@ const STARTER_CARDS = [
     ...STARTER_CARD_DEFAULTS,
     name: "Buckle Up, Buttercup",
     text: "Friendly Faction models in _LEADER_NAME_'s Control Area get +1DEF and +1ARM.  Buckle Up, Buttercup lasts for one round.",
-    rarity: "feat",
+    rarity: "Feat",
     type: "Feat",
     originLeader: "Starter",
     uuid: "starter-buckle-up-buttercup"
@@ -30,8 +30,8 @@ const STARTER_CARDS = [
   {
     ...STARTER_CARD_DEFAULTS,
     name: "Low Profile",
-    text: "SPD: 6, AAT: 5, MAT: 5, RAT: 5, DEF: 14, ARM: 14, ARC: 5, CTRL: 10, Health: 15",
-    rarity: "profile",
+    text: "SPD: 6, AAT: 5, MAT: 5, RAT: 5, DEF: 14, ARM: 14, ARC: 5, CTRL: 10, Health: 15, BASE: 30mm",
+    rarity: "Profile",
     type: "Profile",
     originLeader: "Starter",
     uuid: "starter-low-profile"

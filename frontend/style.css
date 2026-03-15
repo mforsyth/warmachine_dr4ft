@@ -362,6 +362,18 @@ input[type="checkbox"], input[type="radio"] {
   color: green;
 }
 
+.zone-with-profile {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.zone-with-profile > .cards,
+.zone-with-profile > .zone-cols {
+  flex: 1;
+  min-width: 0;
+}
+
 .zone {
   clear: both;
   user-select: none;

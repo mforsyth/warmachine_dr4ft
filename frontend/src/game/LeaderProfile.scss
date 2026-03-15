@@ -1,0 +1,248 @@
+.LeaderProfile {
+  width: 340px;
+  min-width: 340px;
+  max-height: calc(100vh - 80px);
+  overflow-y: auto;
+  position: sticky;
+  top: 30px;
+  font-family: 'Helvetica', 'Arial', sans-serif;
+  font-size: 13px;
+  color: #e0e0e0;
+  background: #1a1a1a;
+  border-radius: 8px;
+  border: 1px solid #333;
+
+  .lp-title {
+    font-family: 'Montserrat', 'Arial', sans-serif;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 8px 12px;
+    background: #222;
+    border-bottom: 1px solid #333;
+    border-radius: 8px 8px 0 0;
+    color: #aaa;
+  }
+
+  .lp-card {
+    padding: 0;
+  }
+
+  /* ---- Section labels (WEAPONS, FEAT, SPELLS, ABILITIES) ---- */
+  .lp-section-label {
+    font-size: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #777;
+    padding: 6px 12px 2px;
+    border-top: 1px solid #333;
+  }
+
+  /* ---- Profile section ---- */
+  .lp-profile {
+    padding: 0;
+  }
+
+  .lp-profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    background: #2a2a2a;
+  }
+
+  .lp-profile-name {
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  .lp-base-size {
+    font-size: 12px;
+    font-weight: bold;
+    background: #555;
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+
+  .lp-health {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: #252525;
+    border-bottom: 1px solid #333;
+
+    .lp-health-icon {
+      color: #c44;
+      font-size: 16px;
+    }
+
+    .lp-health-value {
+      font-size: 16px;
+      font-weight: bold;
+      color: #fff;
+    }
+  }
+
+  /* ---- Stat bars (shared) ---- */
+  .stat-bar {
+    display: flex;
+    gap: 1px;
+
+    .stat-cell {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 32px;
+      padding: 2px 4px;
+
+      .stat-label {
+        font-size: 9px;
+        font-weight: bold;
+        color: #999;
+        text-transform: uppercase;
+      }
+
+      .stat-value {
+        font-size: 14px;
+        font-weight: bold;
+        color: #fff;
+      }
+    }
+  }
+
+  .stat-bar.profile-stats {
+    padding: 4px 8px;
+    background: #2d5a2d;
+    border-bottom: 1px solid #333;
+
+    .stat-cell {
+      flex: 1;
+    }
+  }
+
+  .stat-bar.weapon-stats {
+    margin-left: auto;
+
+    .stat-cell {
+      min-width: 28px;
+    }
+  }
+
+  .stat-bar.spell-stats {
+    margin-left: auto;
+
+    .stat-cell {
+      min-width: 28px;
+    }
+  }
+
+  /* ---- Weapons ---- */
+  .lp-weapon {
+    margin: 2px 0;
+  }
+
+  .lp-weapon-header {
+    display: flex;
+    align-items: center;
+    padding: 6px 12px;
+    gap: 8px;
+  }
+
+  .lp-weapon-melee .lp-weapon-header {
+    background: #4a3828;
+  }
+
+  .lp-weapon-ranged .lp-weapon-header {
+    background: #3a3a28;
+  }
+
+  .lp-weapon-name {
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    white-space: nowrap;
+  }
+
+  /* ---- Feats ---- */
+  .lp-feat {
+    margin: 2px 0;
+
+    .collapsible-header {
+      background: #333;
+    }
+  }
+
+  /* ---- Spells ---- */
+  .lp-spell {
+    margin: 2px 0;
+  }
+
+  .lp-spell-header {
+    display: flex;
+    align-items: center;
+    padding: 6px 12px;
+    background: #282840;
+    gap: 8px;
+  }
+
+  .lp-spell-name {
+    font-size: 13px;
+    font-weight: bold;
+    color: #fff;
+    white-space: nowrap;
+  }
+
+  /* ---- Abilities ---- */
+  .lp-ability {
+    margin: 1px 0;
+  }
+
+  /* ---- Collapsible ---- */
+  .collapsible {
+    .collapsible-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      cursor: pointer;
+      background: #2a2a2a;
+      user-select: none;
+
+      &:hover {
+        background: #353535;
+      }
+    }
+
+    .collapsible-arrow {
+      font-size: 9px;
+      color: #888;
+      flex-shrink: 0;
+    }
+
+    .collapsible-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #ccc;
+    }
+
+    .collapsible-body {
+      padding: 6px 12px 6px 24px;
+      background: #222;
+    }
+  }
+
+  .lp-ability-text {
+    font-size: 12px;
+    line-height: 1.4;
+    color: #bbb;
+    margin-bottom: 4px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

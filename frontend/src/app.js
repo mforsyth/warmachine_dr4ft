@@ -197,8 +197,8 @@ let App = {
           sets.push(...replicateDefaultSet(desiredLength));
         }
       };
-      initializeIfEmpty(App.state.setsSealed, 6);
-      initializeIfEmpty(App.state.setsDraft, 3);
+      initializeIfEmpty(App.state.setsSealed, 2);
+      initializeIfEmpty(App.state.setsDraft, 2);
       initializeIfEmpty(App.state.setsDecadentDraft, 36);
     }
     App.update();

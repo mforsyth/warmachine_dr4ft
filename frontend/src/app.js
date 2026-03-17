@@ -59,7 +59,7 @@ let App = {
     deckSize: 40,
 
     // export deck
-    exportDeckFormat: "cockatrice",
+    exportDeckFormat: "text",
     exportDeckFilename: "filename",
 
     side: false,

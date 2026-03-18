@@ -76,12 +76,12 @@ const CollapsibleSection = ({ title, children, className }) => {
   const [open, setOpen] = React.useState(false);
   if (!children) return null;
   return (
-    <div className={`collapsible ${className || ""}`}>
+    <div className={`collapsible ${open ? "collapsible-open" : "collapsible-closed"} ${className || ""}`}>
       <div className="collapsible-header" onClick={() => setOpen(!open)}>
         <span className="collapsible-arrow">{open ? "▼" : "▶"}</span>
         <span className="collapsible-title">{title}</span>
       </div>
-      {open && <div className="collapsible-body">{children}</div>}
+      <div className="collapsible-body">{children}</div>
     </div>
   );
 };
@@ -231,9 +231,16 @@ const LeaderProfile = ({ cards }) => {
   const hasCards = profiles.length || weapons.length || feats.length || spells.length || abilities.length || battlePlans.length;
   if (!hasCards) return null;
 
+  const handlePrint = () => {
+    window.print();
+  };
+
   return (
     <div className="LeaderProfile">
-      <div className="lp-title">Leader Profile</div>
+      <div className="lp-title">
+        Leader Profile
+        <button className="lp-print-btn" onClick={handlePrint} title="Print Leader Profile">Print</button>
+      </div>
       <div className="lp-card">
         <ProfileSection cards={profiles} />
         <BattlePlanSection cards={battlePlans} />

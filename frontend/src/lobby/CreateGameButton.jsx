@@ -7,7 +7,6 @@ import RadioOptions from "../components/RadioOptions";
 import Switch from "../components/Switch";
 import Modal from "../components/Modal"; 
 import { toTitleCase } from "../utils";
-import GameTypes from "./GameTypes";
 import GameOptions from "./GameOptions";
 
 import "./CreateGameButton.scss"
@@ -114,10 +113,6 @@ const CreateRoomModal = () => {
             tooltip: "Anyone can join"
           }}
         />
-      </ModalSection>
-
-      <ModalSection label="Type" inputId="game-type-input" >
-        <GameTypes/>
       </ModalSection>
 
       <ModalSection label="Packs" inputId="game-packs-input" >

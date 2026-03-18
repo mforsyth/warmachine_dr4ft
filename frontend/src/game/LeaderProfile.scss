@@ -196,6 +196,31 @@
     white-space: nowrap;
   }
 
+  /* ---- Battle Plans ---- */
+  .lp-battle-plans {
+    .collapsible-header {
+      background: #2a2a2a;
+    }
+
+    .lp-battle-plan-intro {
+      margin-bottom: 8px;
+    }
+
+    .lp-battle-plan-list {
+      margin: 0;
+      padding-left: 16px;
+      list-style: disc;
+
+      li {
+        margin-bottom: 6px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
   /* ---- Abilities ---- */
   .lp-ability {
     margin: 1px 0;

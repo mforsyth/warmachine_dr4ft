@@ -181,6 +181,27 @@ const SpellsSection = ({ cards }) => {
   );
 };
 
+const BattlePlanSection = ({ cards }) => {
+  if (!cards.length) return null;
+  const title = "Battle Plan, " + cards.map(c => "\u2022" + c.name).join(", ");
+  return (
+    <div className="lp-section lp-battle-plans">
+      <CollapsibleSection title={title}>
+        <div className="lp-ability-text lp-battle-plan-intro">
+          <strong>Battle Plan</strong> – This model can use one of the following plans at any time during its activation:
+        </div>
+        <ul className="lp-battle-plan-list">
+          {cards.map((card, i) => (
+            <li key={i} className="lp-ability-text">
+              <strong>{card.name}</strong>{card.text ? " – " + sub(card.text) : ""}
+            </li>
+          ))}
+        </ul>
+      </CollapsibleSection>
+    </div>
+  );
+};
+
 const AbilitiesSection = ({ cards }) => {
   if (!cards.length) return null;
   return (
@@ -204,9 +225,10 @@ const LeaderProfile = ({ cards }) => {
   const weapons = cards.filter(c => c.rarity === "Weapon");
   const feats = cards.filter(c => c.rarity === "Feat");
   const spells = cards.filter(c => c.rarity === "Spell");
-  const abilities = cards.filter(c => c.rarity === "Ability");
+  const battlePlans = cards.filter(c => c.rarity === "Ability" && c.type === "Battle Plan");
+  const abilities = cards.filter(c => c.rarity === "Ability" && c.type !== "Battle Plan");
 
-  const hasCards = profiles.length || weapons.length || feats.length || spells.length || abilities.length;
+  const hasCards = profiles.length || weapons.length || feats.length || spells.length || abilities.length || battlePlans.length;
   if (!hasCards) return null;
 
   return (
@@ -214,6 +236,7 @@ const LeaderProfile = ({ cards }) => {
       <div className="lp-title">Leader Profile</div>
       <div className="lp-card">
         <ProfileSection cards={profiles} />
+        <BattlePlanSection cards={battlePlans} />
         <AbilitiesSection cards={abilities} />
         <WeaponsSection cards={weapons} />
         <FeatSection cards={feats} />

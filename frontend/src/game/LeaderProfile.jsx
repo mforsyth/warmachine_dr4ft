@@ -44,12 +44,15 @@ function parseWeapon(card) {
 }
 
 /**
- * Substitute _LEADER_NAME_ placeholder with drafter name.
+ * Substitute _LEADER_NAME_ and __MODEL_TYPE__ placeholders in display text.
  */
 function sub(text) {
   if (!text) return "";
   const name = (App.state.name || "").trim() || "Drafter";
-  return text.split("_LEADER_NAME_").join(name);
+  const modelType = (App.state.modelType || "").trim() || "[Model Type]";
+  return text
+    .split("_LEADER_NAME_").join(name)
+    .split("__MODEL_TYPE__").join(modelType);
 }
 
 const PROFILE_STAT_ORDER = ["SPD", "AAT", "MAT", "RAT", "DEF", "ARM", "ARC", "CTRL"];

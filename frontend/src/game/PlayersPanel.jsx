@@ -8,11 +8,28 @@ const PlayersPanel = () => (
   <fieldset className='PlayersPanel fieldset'>
     <legend className='legend game-legend'>Players ({App.state.players.length}/{App.state.gameSeats})</legend>
     <PlayersTable />
+    <SelfModelType />
     <div id='self-time-fixed' hidden>
       <div className='label'>Time left</div>
       <div id='self-time-fixed-time' />
     </div>
   </fieldset>
+);
+
+const SelfModelType = () => (
+  <div className='self-model-type'>
+    <label className='self-model-type-label'>Signature Unit Type:</label>
+    <input
+      style={{ width: "180px" }}
+      type='text'
+      maxLength={40}
+      placeholder='e.g. Bloodrunner'
+      value={App.state.modelType || ""}
+      onChange={(e) => {
+        App.save("modelType", e.currentTarget.value);
+      }}
+    />
+  </div>
 );
 
 const PlayersTable = () => (

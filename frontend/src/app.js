@@ -16,6 +16,7 @@ let App = {
   state: {
     id: null,
     name: STRINGS.BRANDING.DEFAULT_USERNAME,
+    modelType: "",
 
     serverVersion: null,
     numUsers: 0,

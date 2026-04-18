@@ -162,7 +162,7 @@ const CardBaseText = ({ name, manaCost, type, rarity, power, toughness, text, lo
   return (
     <div className="CardBaseText" style={{ background: backgroundStyle(colors) }}>
       <div className="header">
-        <div className="name">{name}</div>
+        <div className="name">{renderPlaceholders(name, App.state.name, App.state.modelType)}</div>
         <div className="cost">{manaCost}</div>
       </div>
 
@@ -178,7 +178,7 @@ const CardBaseText = ({ name, manaCost, type, rarity, power, toughness, text, lo
           text && (
             <div className="text">
               {
-                renderLeaderNamePlaceholder(text, App.state.name)
+                renderPlaceholders(text, App.state.name, App.state.modelType)
                   .split('\n')
                   .map((line, i) => {
                     const bracketSection = line.match(/\([^\)]+\)/g)
@@ -216,9 +216,12 @@ const CardBaseText = ({ name, manaCost, type, rarity, power, toughness, text, lo
   );
 }
 
-function renderLeaderNamePlaceholder (cardText, drafterName) {
+function renderPlaceholders (cardText, drafterName, modelTypeName) {
   const name = (drafterName || "").trim() || "Drafter";
-  return cardText.split("_LEADER_NAME_").join(name);
+  const modelType = (modelTypeName || "").trim() || "[Model Type]";
+  return cardText
+    .split("_LEADER_NAME_").join(name)
+    .split("__MODEL_TYPE__").join(modelType);
 }
 function backgroundStyle (colors) {
   if (!colors || !colors.length) return 'var(--colorless)'

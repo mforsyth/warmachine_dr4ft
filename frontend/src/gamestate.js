@@ -1,7 +1,7 @@
 import {countBy, findIndex, pullAt, range, remove} from "lodash";
 import _ from "utils/utils";
 import EventEmitter from "events";
-import {ZONE_JUNK, ZONE_MAIN, ZONE_PACK, ZONE_SIDEBOARD} from "./zones";
+import {ZONE_MAIN, ZONE_PACK, ZONE_SIDEBOARD} from "./zones";
 import BASIC_LANDS_BY_COLOR_SIGN from "./basiclands";
 
 export const COLORS_TO_LANDS_NAME = {
@@ -15,8 +15,7 @@ export const COLORS_TO_LANDS_NAME = {
 const defaultState = () => ({
   [ZONE_MAIN]: [],
   [ZONE_SIDEBOARD]: [],
-  [ZONE_PACK]: [],
-  [ZONE_JUNK]: []
+  [ZONE_PACK]: []
 });
 
 /**
@@ -156,7 +155,7 @@ class GameState extends EventEmitter {
 
   resetLands() {
     Object.values(COLORS_TO_LANDS_NAME).forEach((basicLandName) => {
-      [ZONE_MAIN, ZONE_SIDEBOARD, ZONE_JUNK].forEach((zoneName) => {
+      [ZONE_MAIN, ZONE_SIDEBOARD].forEach((zoneName) => {
         remove(this.get(zoneName), ({name}) => basicLandName.toLowerCase() === name.toLowerCase());
       });
     });

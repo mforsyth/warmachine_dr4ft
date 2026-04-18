@@ -4,7 +4,7 @@ import DOMPurify from "dompurify";
 import {range, times, constant} from "lodash";
 
 import App from "./app";
-import {ZONE_JUNK, ZONE_MAIN, ZONE_PACK, ZONE_SIDEBOARD} from "./zones";
+import {ZONE_MAIN, ZONE_PACK, ZONE_SIDEBOARD} from "./zones";
 import exportDeck from "./export";
 
 /**
@@ -40,7 +40,7 @@ const events = {
     }
 
     const dst = e.shiftKey
-      ? zoneName === ZONE_JUNK ? ZONE_MAIN : ZONE_JUNK
+      ? zoneName === ZONE_SIDEBOARD ? ZONE_MAIN : ZONE_SIDEBOARD
       : zoneName === ZONE_SIDEBOARD ? ZONE_MAIN : ZONE_SIDEBOARD;
 
     App.state.gameState.move(zoneName, dst, card);

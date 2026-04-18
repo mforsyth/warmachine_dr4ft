@@ -13,7 +13,7 @@ import {STRINGS} from "../config";
 
 import {vanillaToast} from "vanilla-toast";
 import "vanilla-toast/vanilla-toast.css";
-import {ZONE_JUNK, ZONE_MAIN, ZONE_PACK, ZONE_SIDEBOARD} from "../zones";
+import {ZONE_MAIN, ZONE_PACK, ZONE_SIDEBOARD} from "../zones";
 
 export default class Game extends Component {
   constructor(props) {
@@ -26,9 +26,9 @@ export default class Game extends Component {
   }
 
   componentDidMount() {
-    // Alert to change name
-    if (App.state.name === STRINGS.BRANDING.DEFAULT_USERNAME) {
-      vanillaToast.warning(`Welcome, ${App.state.name}! Please update your nickname via the 'Players' widget in the upper left.`, {duration: 5000});
+    // Alert to set Leader Name and Signature Unit Type
+    if (App.state.name === STRINGS.BRANDING.DEFAULT_USERNAME || !(App.state.modelType && App.state.modelType.trim())) {
+      vanillaToast.warning(`Welcome, ${App.state.name}! Please set your Leader Name and Signature Unit Type via the 'Players' widget in the upper left.`, {duration: 6000});
     }
 
     window.addEventListener("beforeunload", this.leaveGame);
@@ -65,7 +65,7 @@ const CardsZone = () => {
     ? <Grid key={"pack"} zones={[ZONE_PACK]} />
     : <div key={"pack"}/>;
 
-  const props = { zones: [ZONE_MAIN, ZONE_SIDEBOARD, ZONE_JUNK] };
+  const props = { zones: [ZONE_MAIN, ZONE_SIDEBOARD] };
   const pool = App.state.cols
     ? <Cols key={"pool"} {...props}/>
     : <Grid key={"pool"} {...props} />;

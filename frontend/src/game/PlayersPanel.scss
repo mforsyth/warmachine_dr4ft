@@ -1,5 +1,18 @@
 .PlayersPanel {
 
+  .self-model-type {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+    padding: 4px 2px 2px 2px;
+
+    .self-model-type-label {
+      font-weight: bold;
+      white-space: nowrap;
+    }
+  }
+
   #self-time-fixed {
     position: fixed;
     z-index: 99;
